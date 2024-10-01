@@ -1,0 +1,23 @@
+name: validate-packer
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  continuous-integration:
+    runs-on: ubuntu-latest
+    name: validation
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+      
+      - name: validate template
+        uses: actions/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: '*.hcl'
